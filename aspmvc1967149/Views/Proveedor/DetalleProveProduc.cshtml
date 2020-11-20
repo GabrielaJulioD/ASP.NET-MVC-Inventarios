@@ -1,0 +1,34 @@
+﻿@model IEnumerable<aspmvc1967149.Models.ProductoProveedor>
+
+@{
+    ViewBag.Title = "DetalleProveProduc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalle Producto Proveedor</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Descripcion</th>
+            <th>Val Uni</th>
+            <th>Proveedor</th>
+            <th>Telefono</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.nombreProducto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.descripcion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.precioUnitario)</td>
+                    <td>@Html.DisplayFor(modelItem => item.nombreProveedor)</td>
+                    <td>@Html.DisplayFor(modelItem => item.telefonoProveedor)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -14,7 +14,7 @@ namespace aspmvc1967149.Controllers
         // GET: Cliente
         public ActionResult Index()
         {
-            using(var db = new inventarioEntities())
+            using(var db = new inventarioEntities1())
             {
                 return View(db.cliente.ToList());
             }
@@ -35,7 +35,7 @@ namespace aspmvc1967149.Controllers
 
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     db.cliente.Add(newcliente);
                     db.SaveChanges();
@@ -54,7 +54,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     cliente findCliente = db.cliente.Where(a => a.id == id).FirstOrDefault();
                     return View(findCliente);
@@ -74,7 +74,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     //consultar el usuario por id
                     cliente cliente = db.cliente.Find(editCliente.id);
@@ -98,7 +98,7 @@ namespace aspmvc1967149.Controllers
 
         public ActionResult Details(int id)
         {
-            using (var db = new inventarioEntities())
+            using (var db = new inventarioEntities1())
             {
                 var findCliente = db.cliente.Find(id);
                 return View(findCliente);
@@ -109,7 +109,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     //consultar el usuario
                     var findCliente = db.cliente.Find(id);

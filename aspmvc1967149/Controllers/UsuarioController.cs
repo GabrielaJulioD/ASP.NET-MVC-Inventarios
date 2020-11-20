@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using aspmvc1967149.Models;
 
 namespace aspmvc1967149.Controllers
@@ -12,7 +13,7 @@ namespace aspmvc1967149.Controllers
         // GET: Usuario
         public ActionResult Index()
         {
-            using (var db = new inventarioEntities())
+            using (var db = new inventarioEntities1())
             {
                 return View(db.usuario.ToList());
             }
@@ -32,7 +33,7 @@ namespace aspmvc1967149.Controllers
 
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     db.usuario.Add(newUser);
                     db.SaveChanges();
@@ -50,7 +51,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     usuario findUser = db.usuario.Where(a => a.id == id).FirstOrDefault();
                     return View(findUser);
@@ -69,7 +70,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     //consultar el usuario por id
                     usuario user = db.usuario.Find(editUser.id);
@@ -95,7 +96,7 @@ namespace aspmvc1967149.Controllers
 
         public ActionResult Details(int id)
         {
-            using(var db = new inventarioEntities()){
+            using(var db = new inventarioEntities1()){
                 var findUser = db.usuario.Find(id);
                 return View(findUser);
             }
@@ -105,7 +106,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     //consultar el usuario
                     var findUser = db.usuario.Find(id);
@@ -123,6 +124,38 @@ namespace aspmvc1967149.Controllers
                 return View();
                 throw;
             }
+        }
+
+        public ActionResult Login(string message = "")
+        {
+            ViewBag.Message = message;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string user, string password)
+        {
+            using (var db = new inventarioEntities1())
+            {
+                var userLogin = db.usuario.FirstOrDefault(e => e.email == user && e.password == password);
+                if (userLogin != null)
+                {
+                    FormsAuthentication.SetAuthCookie(userLogin.email, true);
+                    return RedirectToAction("Index", "Producto");
+                }
+                else
+                {
+                    return Login("Verifique sus datos");
+                }
+            }
+        }
+
+        [Authorize]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

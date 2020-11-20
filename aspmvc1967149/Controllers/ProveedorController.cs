@@ -12,11 +12,28 @@ namespace aspmvc1967149.Controllers
         // GET: Proveedor
         public ActionResult Index()
         {
-            using (var db = new inventarioEntities())
+            using (var db = new inventarioEntities1())
             {
                 return View(db.proveedor.ToList());
             }
         }
+
+        public ActionResult DetalleProveProduc()
+        {
+            var db = new inventarioEntities();
+            var query = from proveedor in db.proveedor
+                        join producto in db.producto on proveedor.id equals producto.id_proveedor
+                        select new ProductoProveedor
+                        {
+                            nombreProducto = producto.nombre,
+                            nombreProveedor = proveedor.nombre,
+                            telefonoProveedor = proveedor.telefono,
+                            descripcion = producto.descripcion,
+                            precioUnitario = producto.percio_unitario
+                        };
+            return View(query);
+        }
+
 
         public ActionResult Create()
         {
@@ -32,7 +49,7 @@ namespace aspmvc1967149.Controllers
 
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     db.proveedor.Add(newproveedor);
                     db.SaveChanges();
@@ -51,7 +68,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     proveedor findProveedor = db.proveedor.Where(a => a.id == id).FirstOrDefault();
                     return View(findProveedor);
@@ -71,7 +88,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     //consultar el usuario por id
                     proveedor proveedor = db.proveedor.Find(editProveedor.id);
@@ -96,7 +113,7 @@ namespace aspmvc1967149.Controllers
 
         public ActionResult Details(int id)
         {
-            using (var db = new inventarioEntities())
+            using (var db = new inventarioEntities1())
             {
                 var findproveedor = db.proveedor.Find(id);
                 return View(findproveedor);
@@ -107,7 +124,7 @@ namespace aspmvc1967149.Controllers
         {
             try
             {
-                using (var db = new inventarioEntities())
+                using (var db = new inventarioEntities1())
                 {
                     //consultar el usuario
                     var findProveedor = db.proveedor.Find(id);
