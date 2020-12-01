@@ -1,0 +1,44 @@
+﻿@model List<aspmvc1967149.Models.producto>
+
+@{
+    ViewBag.Title = "Reporte";
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Reporte</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container">
+        <h2>Reporte</h2>
+        <img src="https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png" alt="Logo"/>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var element in Model)
+                { 
+                <tr>
+                    <td>@element.nombre</td>
+                    <td>@element.percio_unitario</td>
+                    <td>@element.descripcion</td>
+                </tr>
+                
+                }
+            </tbody>
+        </table>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+
+</html>

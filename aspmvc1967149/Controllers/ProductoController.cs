@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using aspmvc1967149.Models;
+using Rotativa;
 
 namespace aspmvc1967149.Controllers
 {
@@ -119,6 +120,21 @@ namespace aspmvc1967149.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+        }
+
+        public ActionResult Reporte()
+        {
+            using (var db = new inventarioEntities1())
+            {
+                return View(db.producto.ToList());
+           
+            }
+        }
+
+        public ActionResult ÍmprimirReporte()
+        {
+            return new ActionAsPdf("Reporte") {FileName = "reporte_producto.pdf" };
+           
         }
     }
 }
